@@ -44,7 +44,7 @@ def add_data(form):
   
   c.execute('SELECT COUNT(*) FROM data')
   row = c.fetchone()
-  dataid=row[0]
+  dataid=row[0]+1
   
   if "time" in form:
     timestamp = int(time.time())
