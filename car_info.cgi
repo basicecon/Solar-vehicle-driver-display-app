@@ -14,7 +14,6 @@ DATABASE="/homes/"+MYLOGIN+"/apache/htdocs/SolarCar/car_info.db"
 
 ##############################################################
 def get_latest_data():
-  sys.stderr.write("entering new tweet.\n")
   conn = sqlite3.connect(DATABASE)
   c = conn.cursor()
 
@@ -26,16 +25,13 @@ def get_latest_data():
   data = [ {'speed':row[0], 'batterycharge':row[1], 'arraypower':row[2],
             'motorcurrent':row[3], 'batterycurrent':row[4]} ]
 
-  sys.stderr.write("entering new tweet.\n")
   print("Content-Type: application/json\n\n")
   data_string = json.dumps(data)
   sys.stderr.write("entering new tweet.\n")
   print data_string
-  sys.stderr.write("entering new tweet.\n")
 
   conn.commit()
   conn.close()
-
 
 ##############################################################
 def add_data(form):
