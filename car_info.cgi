@@ -79,6 +79,12 @@ def add_data(form):
   t = (dataid, timestamp, speed, batterycharge, arraypower, motorcurrent, batterycurrent)
   c.execute('INSERT INTO data VALUES (?,?,?,?,?,?,?)', t)
 
+  data = [ {'status':'ok'} ]
+  print("Content-Type: application/json\n\n")
+  data_string = json.dumps(data)
+  print data_string
+  
+
   conn.commit()
   conn.close()
 
