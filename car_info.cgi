@@ -10,7 +10,7 @@ import json
 
 #Get Databasedir
 MYLOGIN="wang1247"
-DATABASE="/homes/"+MYLOGIN+"/Solar-vehicle-driver-display-app/car_info.db"
+DATABASE="/homes/"+MYLOGIN+"/apache/htdocs/SolarCar/car_info.db"
 
 ##############################################################
 def get_latest_data():
