@@ -36,6 +36,52 @@ def get_latest_data():
   conn.commit()
   conn.close()
 
+
+##############################################################
+def add_data(form):
+  conn = sqlite3.connect(DATABASE)
+  c = conn.cursor()
+  
+  c.execute('SELECT COUNT(*) FROM data')
+  row = c.fetchone()
+  dataid=row[0]
+  
+  if "time" in form:
+    timestamp = int(time.time())
+  else:
+    timestamp=None
+
+  if "speed" in form:
+    speed=form["speed"].value
+  else:
+    speed=None
+
+  if "batterycharge" in form:
+    batterycharge=form["batterycharge"].value
+  else:
+    batterycharge=None
+
+  if "arraypower" in form:
+    arraypower=form["arraypower"].value
+  else:
+    arraypower=None
+
+  if "motorcurrent" in form:
+    motorcurrent=form["motorcurrent"].value
+  else:
+    motorcurrent=None
+
+  if "batterycurrent" in form:
+    batterycurrent=form["batterycurrent"].value
+  else:
+    batterycurrent=None
+  
+  t = (dataid, timestamp, speed, batterycharge, arraypower, motorcurrent, batterycurrent)
+  c.execute('INSERT INTO data VALUES (?,?,?,?,?,?,?)', t)
+
+  conn.commit()
+  conn.close()
+
 ##############################################################
 def main():
   sys.stderr.write("entering new tweet.\n")
@@ -44,5 +90,7 @@ def main():
     action=form["action"].value
     if action == "get_latest_data":
       get_latest_data()
+    if action == "post":
+      add_data(form)
 
 main()
