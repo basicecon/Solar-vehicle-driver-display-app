@@ -1,5 +1,16 @@
 package com.example.solarvehicledriverdisplay;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONObject;
+
+import android.util.Log;
+
 /*********************************
  * 
  * 
@@ -10,7 +21,7 @@ package com.example.solarvehicledriverdisplay;
  * 2.use the random() function to generate new DataObject that changes 
  *   consistently based on previous random values
  *
- */
+ ********************************/
 
 public class DataObject{
 	int speed;
@@ -73,6 +84,53 @@ public class DataObject{
 
 		return random;
 
+	}
+	
+	public static int send(DataObject obj){
+//		int speed;
+//		int batteryCharge;
+//		int arrayPower;
+//		int motorCurrent;
+//		int batteryCurrent;
+		
+		//create json object
+		JSONObject jsonobj;
+		jsonobj = new JSONObject();
+		
+		try{
+			jsonobj.put("Speed", obj.speed);
+			jsonobj.put("BatteryCharge", obj.batteryCharge);
+			jsonobj.put("ArrayPower", obj.arrayPower);
+			jsonobj.put("MotorCurrent", obj.motorCurrent);
+			jsonobj.put("batteryCurrent", obj.batteryCurrent);
+		}catch(Exception e){
+			Log.println(1, "Json Object", "Unable to set json object value\n");
+		}
+		
+		//create httpclient
+		String url = "www.data.cs.purdue.edu:";
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppostreq = new HttpPost(url);
+		StringEntity se = null;
+		try{
+			se = new StringEntity(jsonobj.toString());
+			se.setContentType("application/json;charset=UTF-8");
+			se.setContentEncoding((Header) new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
+		}catch(Exception e){
+			Log.println(1, "String Entity", "toString method error");
+		}
+		httppostreq.setEntity(se);
+		HttpResponse httpresponse = null;
+		try{
+			httpresponse = httpclient.execute(httppostreq);
+		}catch(Exception e){
+			Log.println(1, "Http Request", "can't send message");
+		}
+		
+		Log.d("HttpResponse", ""+httpresponse);
+		
+		return 1;
+		
 	}
 
 
