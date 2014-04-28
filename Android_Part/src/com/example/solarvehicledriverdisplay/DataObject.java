@@ -23,7 +23,11 @@ import android.util.Log;
  * 1.create a DataObject object using the constructor with no parameters
  * 2.use the random() function to generate new DataObject that changes 
  *   consistently based on previous random values
- *
+ * 3.use the send() function to send data to server
+ * 4.use the getResponse() function to get more data from server
+ * 
+ * 
+ * note: url port number TBD
  ********************************/
 
 public class DataObject{
