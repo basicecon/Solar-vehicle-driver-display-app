@@ -3,18 +3,21 @@ package com.example.solarvehicledriverdisplay;
 import java.util.Locale;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
@@ -37,6 +40,50 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setStartButonListener();
+	}
+	
+	public void setStartButonListener(){
+		//set button listener
+				Button mybutton = (Button) findViewById(R.id.start);
+				Log.d("System.err","Debug\n");
+				try{
+				mybutton.setOnClickListener(new View.OnClickListener() {
+				    public void onClick(View v) {
+				        DataObject obj = new DataObject();
+				        Log.println(1, "Debug", "Debug\n");
+				        int i = 0;
+				        while(i < 1){
+				        	TextView speedTextView = (TextView)findViewById(R.id.speed);
+				        	speedTextView.setText(""+obj.random().speed);
+				        	TextView batteryChargeTextView = (TextView)findViewById(R.id.batteryCharge);
+				        	batteryChargeTextView.setText(""+obj.batteryCharge);
+				        	TextView powerTextView = (TextView)findViewById(R.id.power);
+				        	powerTextView.setText(""+obj.arrayPower);
+				        	TextView motorCurrentTextView = (TextView)findViewById(R.id.motorCurrent);
+				        	motorCurrentTextView.setText(""+obj.motorCurrent);
+				        	TextView batteryCurrentTextView = (TextView)findViewById(R.id.batteryCurrent);
+				        	batteryCurrentTextView.setText(""+obj.batteryCurrent);
+				        	
+				        	//invalidate
+				        	speedTextView.invalidate();
+				        	batteryChargeTextView.invalidate();
+				        	powerTextView.invalidate();
+				        	motorCurrentTextView.invalidate();
+				        	batteryCurrentTextView.invalidate();
+				        	
+				        	speedTextView.postInvalidate();
+				        	batteryChargeTextView.postInvalidate();
+				        	powerTextView.postInvalidate();
+				        	motorCurrentTextView.postInvalidate();
+				        	batteryCurrentTextView.postInvalidate();
+				        	i++;
+				        }
+				    }
+				});
+				}catch(Exception e){
+					Log.println(1, "setbutton listener", "Failed\n");
+				}
 	}
 
 	@Override
