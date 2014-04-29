@@ -21,8 +21,8 @@ import android.util.Log;
  * 
  * Usage:
  * 1.create a DataObject object using the constructor with no parameters
- * 2.use the random() function to generate new DataObject that changes 
- *   consistently based on previous random values
+ * 2.use the random() function to change the ints 
+ *    based on their previous values
  * 3.use the send() function to send data to server
  * 4.use the getResponse() function to get more data from server
  * 
@@ -65,33 +65,33 @@ public class DataObject{
 	}
 	
 	public DataObject random(){
-		DataObject random = new DataObject(this);
-		random.speed = (int) (random.speed + (Math.random()-0.5)*5);
-		this.speed = random.speed;
-		random.batteryCharge = (int) (random.batteryCurrent + (Math.random()-0.5)*5);
-		this.batteryCharge = random.batteryCharge;
-		random.arrayPower = (int) (random.arrayPower + (Math.random()-0.5)*10);
-		this.arrayPower = random.arrayPower;
-		random.motorCurrent = (int) (random.motorCurrent + (Math.random()-0.5)*5);
-		this.motorCurrent = random.motorCurrent;
-		random.batteryCurrent = (int) (batteryCurrent + (Math.random()-0.5)*5);
-		this.batteryCurrent = random.batteryCurrent;
+		
+		this.speed = (int) (this.speed + (Math.random()-0.45)*30);
+		//this.speed = this.speed;
+		this.batteryCharge = (int) (this.batteryCurrent + (Math.random()-0.45)*1);
+		//this.batteryCharge = this.batteryCharge;
+		this.arrayPower = (int) (this.arrayPower + (Math.random()-0.45)*10);
+		//this.arrayPower = this.arrayPower;
+		this.motorCurrent = (int) (this.motorCurrent + (Math.random()-0.45)*5);
+		//this.motorCurrent = this.motorCurrent;
+		this.batteryCurrent = (int) (batteryCurrent + (Math.random()-0.45)*5);
+		//this.batteryCurrent = this.batteryCurrent;
 
-		if (random.speed > 60) {random.speed = 60; }
-		if (random.batteryCharge > 100) {random.batteryCharge = 100; }
-		if (random.arrayPower > 1000) {random.arrayPower = 1000; }
-		if (random.motorCurrent > 100) {random.motorCurrent = 100; }
-		if (random.batteryCurrent > 100) {random.batteryCurrent = 100; }
+		if (this.speed > 60) {this.speed = 60; }
+		if (this.batteryCharge > 100) {this.batteryCharge = 100; }
+		if (this.arrayPower > 1000) {this.arrayPower = 1000; }
+		if (this.motorCurrent > 100) {this.motorCurrent = 100; }
+		if (this.batteryCurrent > 100) {this.batteryCurrent = 100; }
 
-		if (random.speed < 0) {random.speed = 0; }
-		if (random.batteryCharge < 0) {random.batteryCharge = 0; }
-		if (random.arrayPower < 0) {random.arrayPower = 0; }
-		if (random.motorCurrent < 0) {random.motorCurrent = 0; }
-		if (random.batteryCurrent < 0) {random.batteryCurrent = 0; }
+		if (this.speed < 0) {this.speed = 0; }
+		if (this.batteryCharge < 0) {this.batteryCharge = 0; }
+		if (this.arrayPower < 0) {this.arrayPower = 0; }
+		if (this.motorCurrent < 0) {this.motorCurrent = 0; }
+		if (this.batteryCurrent < 0) {this.batteryCurrent = 0; }
 		
 		
 
-		return random;
+		return this;
 
 	}
 	

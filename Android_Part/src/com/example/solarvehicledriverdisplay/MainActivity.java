@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity {
 				                public void run() {
 				                	update(obj);
 				                }
-				            }, 1000);
+				            }, 100);
 				            
 				        	
 				        	i++;
