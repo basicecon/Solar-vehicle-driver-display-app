@@ -3,6 +3,7 @@ package com.example.solarvehicledriverdisplay;
 import java.util.Locale;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	final DataObject obj = new DataObject();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,15 @@ public class MainActivity extends FragmentActivity {
 				try{
 				mybutton.setOnClickListener(new View.OnClickListener() {
 				    public void onClick(View v) {
-				        DataObject obj = new DataObject();
+				    	if(obj == null){
+				    		final DataObject obj = new DataObject();
+				    	}
 				        Log.println(1, "Debug", "Debug\n");
 				        int i = 0;
 				        while(i < 1){
-				        	TextView speedTextView = (TextView)findViewById(R.id.speed);
-				        	speedTextView.setText(""+obj.random().speed);
+				        	obj.random();
+				        	final TextView speedTextView = (TextView)findViewById(R.id.speed);
+				        	speedTextView.setText(""+obj.speed);
 				        	TextView batteryChargeTextView = (TextView)findViewById(R.id.batteryCharge);
 				        	batteryChargeTextView.setText(""+obj.batteryCharge);
 				        	TextView powerTextView = (TextView)findViewById(R.id.power);
@@ -77,6 +82,28 @@ public class MainActivity extends FragmentActivity {
 				        	powerTextView.postInvalidate();
 				        	motorCurrentTextView.postInvalidate();
 				        	batteryCurrentTextView.postInvalidate();
+				        	
+				        	runOnUiThread(new Runnable() {
+				        		   @Override
+				        		   public void run() {
+				        			   speedTextView.setText(""+obj.speed);
+				        		   }
+				        		});
+//				        	try{
+//				        		Thread.sleep(200);
+//				        	}catch(Exception e){
+//				        		Log.println(1, "Sleep", "Failed\n");
+//				        	}
+				        	
+				        	new Handler().postDelayed(new Runnable() {
+
+				                @Override
+				                public void run() {
+				                	update(obj);
+				                }
+				            }, 1000);
+				            
+				        	
 				        	i++;
 				        }
 				    }
@@ -85,6 +112,8 @@ public class MainActivity extends FragmentActivity {
 					Log.println(1, "setbutton listener", "Failed\n");
 				}
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,6 +141,9 @@ public class MainActivity extends FragmentActivity {
 		power.setText(powerStr);
 		batteryCurrent.setText(batteryCurrentStr);
 		motorCurrent.setText(motorCurrentStr);
+		
+		Button mybutton = (Button) findViewById(R.id.start);
+		mybutton.performClick();
 	}
 	
 	

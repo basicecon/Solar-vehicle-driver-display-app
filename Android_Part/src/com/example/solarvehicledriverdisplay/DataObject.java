@@ -89,11 +89,7 @@ public class DataObject{
 		if (random.motorCurrent < 0) {random.motorCurrent = 0; }
 		if (random.batteryCurrent < 0) {random.batteryCurrent = 0; }
 		
-		try{
-    		Thread.sleep(200);
-    	}catch(Exception e){
-    		Log.println(1, "Sleep", "Failed\n");
-    	}
+		
 
 		return random;
 
