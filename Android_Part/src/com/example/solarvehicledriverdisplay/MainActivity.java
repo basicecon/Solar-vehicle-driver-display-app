@@ -1,23 +1,13 @@
 package com.example.solarvehicledriverdisplay;
 
-import java.util.Locale;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -112,8 +102,6 @@ public class MainActivity extends FragmentActivity {
 					Log.println(1, "setbutton listener", "Failed\n");
 				}
 	}
-	
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,8 +118,8 @@ public class MainActivity extends FragmentActivity {
 		TextView batteryCurrent = (TextView)this.findViewById(R.id.batteryCurrent);
 		TextView motorCurrent = (TextView)this.findViewById(R.id.motorCurrent);
 		
-		String speedStr = data.speed + " m/s";
-		String batteryStr = data.batteryCharge + " ?";
+		String speedStr = data.speed + " mph";
+		String batteryStr = data.batteryCharge + " C";
 		String powerStr = data.arrayPower + " W";
 		String batteryCurrentStr = data.batteryCurrent + " A";
 		String motorCurrentStr = data.motorCurrent + " A";
@@ -146,5 +134,9 @@ public class MainActivity extends FragmentActivity {
 		mybutton.performClick();
 	}
 	
-	
+	public void viewClick(View view)
+	{
+		Intent intent = new Intent(this, VisualActivity.class);
+		startActivity(intent);
+	}
 }

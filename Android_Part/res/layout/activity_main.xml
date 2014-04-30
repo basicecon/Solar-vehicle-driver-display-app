@@ -131,6 +131,7 @@
         android:layout_alignBaseline="@+id/start"
         android:layout_alignBottom="@+id/start"
         android:layout_alignRight="@+id/motorCurrentLabel"
+        android:onClick="viewClick"
         android:text="View" />
 
 </RelativeLayout>
