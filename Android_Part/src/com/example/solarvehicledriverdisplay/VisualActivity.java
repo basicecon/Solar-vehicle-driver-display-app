@@ -1,7 +1,17 @@
 package com.example.solarvehicledriverdisplay;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,10 +40,23 @@ public class VisualActivity extends FragmentActivity
 	 */
 	
 	ViewPager mViewPager;
+	public static VisualActivity mVisualActivity;
+	public static ArrayList<DataObject> dataList;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		if (mVisualActivity == null)
+		{
+			mVisualActivity = this;
+		}
+		
+		
 		super.onCreate(savedInstanceState);
+		
+		// Receive DataObject from MainActivity
+		dataList = (ArrayList<DataObject>)getIntent().getSerializableExtra(MainActivity.EXTRA_MESSAGE);
+		
 		setContentView(R.layout.activity_visual);
 		
 		// Create the adapter that will return a fragment for each of the three
@@ -58,7 +81,7 @@ public class VisualActivity extends FragmentActivity
 	 * one of the sections/tabs/pages.
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+		
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -78,7 +101,7 @@ public class VisualActivity extends FragmentActivity
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 5;
 		}
 
 		@Override
@@ -91,9 +114,130 @@ public class VisualActivity extends FragmentActivity
 				return getString(R.string.title_section2).toUpperCase(l);
 			case 2:
 				return getString(R.string.title_section3).toUpperCase(l);
+			case 3:
+				return getString(R.string.title_section4).toUpperCase(l);
+			case 4:
+				return getString(R.string.title_section5).toUpperCase(l);
 			}
 			return null;
 		}
+	}
+	
+	public View visualize(int arg)
+	{
+		double[] x = new double[dataList.size()];
+		XYSeries series = null;
+		XYSeriesRenderer r = null;
+		
+		for (int i = 0; i < dataList.size(); i++)
+		{
+			x[i] = i;
+		}
+		
+		switch (arg) {
+		case 1:
+			series= new XYSeries("Speed");
+			
+			for (int i = 0; i < x.length; i++)
+			{
+				series.add(x[i], dataList.get(i).speed);
+			}
+			
+			r = new XYSeriesRenderer();
+			r.setColor(Color.BLUE);
+			r.setPointStyle(PointStyle.POINT);
+			
+			break;
+		case 2:
+			series= new XYSeries("Battery Charge");
+			
+			for (int i = 0; i < x.length; i++)
+			{
+				series.add(x[i], dataList.get(i).batteryCurrent);
+			}
+			
+			r = new XYSeriesRenderer();
+			r.setColor(Color.RED);
+			r.setPointStyle(PointStyle.POINT);
+			
+			break;
+		case 3:
+			series= new XYSeries("Power");
+			
+			for (int i = 0; i < x.length; i++)
+			{
+				series.add(x[i], dataList.get(i).arrayPower);
+			}
+			
+			r = new XYSeriesRenderer();
+			r.setColor(Color.CYAN);
+			r.setPointStyle(PointStyle.POINT);
+			
+			break;
+		case 4:
+			series= new XYSeries("Motor Current");
+			
+			for (int i = 0; i < x.length; i++)
+			{
+				series.add(x[i], dataList.get(i).motorCurrent);
+			}
+			
+			r = new XYSeriesRenderer();
+			r.setColor(Color.GREEN);
+			r.setPointStyle(PointStyle.POINT);
+			
+			break;
+		case 5:
+			series= new XYSeries("Battery Current");
+			
+			for (int i = 0; i < x.length; i++)
+			{
+				series.add(x[i], dataList.get(i).batteryCurrent);
+			}
+			
+			r = new XYSeriesRenderer();
+			r.setColor(Color.YELLOW);
+			r.setPointStyle(PointStyle.POINT);
+			
+			break;
+		}
+		
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		dataset.addSeries(series);
+		
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		renderer.addSeriesRenderer(r);
+		
+		View chart = ChartFactory.getLineChartView(this, dataset, renderer);
+		
+		return chart;
+	}
+	
+	public View visualizeTest()
+	{
+		double[] x = new double[]{1,3,5,7,9,11};
+		double[] y = new double[]{3,14,5,30,20,25};
+		
+		XYSeries series = new XYSeries("Speed");
+		
+		for (int i = 0; i < x.length; i++)
+		{
+			series.add(x[i], y[i]);
+		}
+		
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		dataset.addSeries(series);
+		
+		XYSeriesRenderer r = new XYSeriesRenderer();
+		r.setColor(Color.BLUE);
+		r.setPointStyle(PointStyle.CIRCLE);
+		
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		renderer.addSeriesRenderer(r);
+		
+		View chart = ChartFactory.getLineChartView(this, dataset, renderer);
+		//setContentView(chart);
+		return chart;
 	}
 
 	/**
@@ -113,13 +257,18 @@ public class VisualActivity extends FragmentActivity
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
+			/*View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
-			/*TextView dummyTextView = (TextView) rootView
+			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));*/
-			return rootView;
+			
+			int arg = getArguments().getInt(ARG_SECTION_NUMBER);
+			
+			return VisualActivity.mVisualActivity.visualize(arg);
+			
+			//return rootView;
 		}
 	}
 }

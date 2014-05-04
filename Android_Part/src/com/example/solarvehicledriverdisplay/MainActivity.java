@@ -1,5 +1,7 @@
 package com.example.solarvehicledriverdisplay;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +28,11 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	final DataObject obj = new DataObject();
+	DataObject obj = new DataObject();
+	public ArrayList<DataObject> dataList= new ArrayList<DataObject>();
+	public final static String EXTRA_MESSAGE = "com.example.VisualActivity.MESSAGE";
+	public final int DEFAULTNUMBER = 500;
+	private int count = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +49,25 @@ public class MainActivity extends FragmentActivity {
 				mybutton.setOnClickListener(new View.OnClickListener() {
 				    public void onClick(View v) {
 				    	if(obj == null){
-				    		final DataObject obj = new DataObject();
+				    		obj = new DataObject();
 				    	}
 				        Log.println(1, "Debug", "Debug\n");
 				        int i = 0;
-				        while(i < 1){
+				        while(i < 1 && count < DEFAULTNUMBER){
 				        	obj.random();
+				        	DataObject temp = new DataObject(obj.speed, obj.batteryCharge, obj.arrayPower, obj.motorCurrent, obj.batteryCurrent);
+				        	dataList.add(temp);
+				        	count++;
 				        	final TextView speedTextView = (TextView)findViewById(R.id.speed);
-				        	speedTextView.setText(""+obj.speed);
+				        	speedTextView.setText(""+obj.speed+" mph");
 				        	TextView batteryChargeTextView = (TextView)findViewById(R.id.batteryCharge);
-				        	batteryChargeTextView.setText(""+obj.batteryCharge);
+				        	batteryChargeTextView.setText(""+obj.batteryCharge+" C");
 				        	TextView powerTextView = (TextView)findViewById(R.id.power);
-				        	powerTextView.setText(""+obj.arrayPower);
+				        	powerTextView.setText(""+obj.arrayPower+" W");
 				        	TextView motorCurrentTextView = (TextView)findViewById(R.id.motorCurrent);
-				        	motorCurrentTextView.setText(""+obj.motorCurrent);
+				        	motorCurrentTextView.setText(""+obj.motorCurrent+" A");
 				        	TextView batteryCurrentTextView = (TextView)findViewById(R.id.batteryCurrent);
-				        	batteryCurrentTextView.setText(""+obj.batteryCurrent);
+				        	batteryCurrentTextView.setText(""+obj.batteryCurrent+" A");
 				        	
 				        	//invalidate
 				        	speedTextView.invalidate();
@@ -76,7 +85,7 @@ public class MainActivity extends FragmentActivity {
 				        	runOnUiThread(new Runnable() {
 				        		   @Override
 				        		   public void run() {
-				        			   speedTextView.setText(""+obj.speed);
+				        			   speedTextView.setText(""+obj.speed+" mph");
 				        		   }
 				        		});
 //				        	try{
@@ -111,7 +120,7 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	public void update(DataObject data)
-	{
+	{	
 		TextView speed = (TextView)this.findViewById(R.id.speed);
 		TextView batteryCharge = (TextView)this.findViewById(R.id.batteryCharge);
 		TextView power = (TextView)this.findViewById(R.id.power);
@@ -137,6 +146,9 @@ public class MainActivity extends FragmentActivity {
 	public void viewClick(View view)
 	{
 		Intent intent = new Intent(this, VisualActivity.class);
+    	Bundle bundle = new Bundle();
+    	bundle.putSerializable(EXTRA_MESSAGE, dataList);
+    	intent.putExtras(bundle);
 		startActivity(intent);
 	}
 }

@@ -5,113 +5,112 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <TextView
-    android:id="@+id/speedLabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignBaseline="@+id/speed"
-    android:layout_alignBottom="@+id/speed"
-    android:layout_marginRight="120dp"
-    android:layout_toLeftOf="@+id/speed"
-    android:text="Speed :"
-    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/batteryCharge"
+    <ImageView
+        android:id="@+id/solar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/speed"
-        android:layout_below="@+id/speed"
-        android:layout_marginTop="45dp"
-        android:text="0"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/solar_vehicle" />
+
+    <TextView
+        android:id="@+id/speedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/solar"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/solar"
+        android:text="Speed: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/batteryChargeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/batteryCharge"
-        android:layout_alignBottom="@+id/batteryCharge"
         android:layout_alignLeft="@+id/speedLabel"
-        android:text="Battery Charge :"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/power"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/batteryCharge"
-        android:layout_below="@+id/batteryCharge"
+        android:layout_below="@+id/speedLabel"
         android:layout_marginTop="45dp"
-        android:text="0"
+        android:text="Battery Charge: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/powerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/power"
-        android:layout_alignBottom="@+id/power"
         android:layout_alignLeft="@+id/batteryChargeLabel"
-        android:text="Power :"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/motorCurrent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/power"
+        android:layout_below="@+id/batteryChargeLabel"
         android:layout_marginTop="45dp"
-        android:layout_toRightOf="@+id/speedLabel"
-        android:text="0"
+        android:text="Power: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/motorCurrentLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/motorCurrent"
-        android:layout_alignBottom="@+id/motorCurrent"
         android:layout_alignLeft="@+id/powerLabel"
-        android:text="Motor Current :"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/batteryCurrent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/motorCurrent"
-        android:layout_below="@+id/motorCurrent"
+        android:layout_below="@+id/powerLabel"
         android:layout_marginTop="45dp"
-        android:text="0"
+        android:text="Motor Current: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/batteryCurrentLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/batteryCurrent"
-        android:layout_alignBottom="@+id/batteryCurrent"
         android:layout_alignLeft="@+id/motorCurrentLabel"
-        android:text="Battery Current :"
+        android:layout_below="@+id/motorCurrentLabel"
+        android:layout_marginTop="45dp"
+        android:text="Battery Current: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ImageView
-        android:id="@+id/map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="50dp"
-        android:src="@drawable/map" />
 
     <TextView
         android:id="@+id/speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/speedLabel"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/map"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="100dp"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/batteryCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/batteryChargeLabel"
+        android:layout_alignBottom="@+id/batteryChargeLabel"
+        android:layout_alignLeft="@+id/speed"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/power"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/powerLabel"
+        android:layout_alignBottom="@+id/powerLabel"
+        android:layout_alignLeft="@+id/batteryCharge"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/motorCurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/motorCurrentLabel"
+        android:layout_alignBottom="@+id/motorCurrentLabel"
+        android:layout_alignLeft="@+id/power"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/batteryCurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/batteryCurrentLabel"
+        android:layout_alignBottom="@+id/batteryCurrentLabel"
+        android:layout_alignLeft="@+id/motorCurrent"
         android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -120,8 +119,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/batteryCurrentLabel"
-        android:layout_below="@+id/batteryCurrent"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/batteryCurrentLabel"
+        android:layout_marginTop="15dp"
         android:text="Start" />
 
     <Button
@@ -130,8 +129,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/start"
         android:layout_alignBottom="@+id/start"
-        android:layout_alignRight="@+id/motorCurrentLabel"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/powerLabel"
         android:onClick="viewClick"
-        android:text="View" />
+        android:text="View Analysis" />
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.solarvehicledriverdisplay;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -30,7 +31,7 @@ import android.util.Log;
  * note: url port number TBD
  ********************************/
 
-public class DataObject{
+public class DataObject implements Serializable{
 	int speed;
 	int batteryCharge;
 	int arrayPower;
