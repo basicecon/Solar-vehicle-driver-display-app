@@ -29,8 +29,12 @@ public class MainActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 	DataObject obj = new DataObject();
+	
+	// List to store every randomly generated data object -- Edited by Zhuo Chen
 	public ArrayList<DataObject> dataList= new ArrayList<DataObject>();
+	// key of dataList sent to VisualActivity from MainAcitivity when click view analysis -- Edited by Zhuo Chen
 	public final static String EXTRA_MESSAGE = "com.example.VisualActivity.MESSAGE";
+	// restriction number of generating data -- Edited by Zhuo Chen
 	public final int DEFAULTNUMBER = 500;
 	private int count = 0;
 
@@ -55,6 +59,9 @@ public class MainActivity extends FragmentActivity {
 				        int i = 0;
 				        while(i < 1 && count < DEFAULTNUMBER){
 				        	obj.random();
+				        	
+				        	// create temp DataObject for each randomly generated data
+				        	// and add it into list -- Edited by Zhuo Chen
 				        	DataObject temp = new DataObject(obj.speed, obj.batteryCharge, obj.arrayPower, obj.motorCurrent, obj.batteryCurrent);
 				        	dataList.add(temp);
 				        	count++;
@@ -119,6 +126,15 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 	
+	/**
+	 * @author Zhuo Chen
+	 * 
+	 * 1.update the speed, batteryCharge, power, motorCurrent, batteryCurrent
+	 *   TextView in MainActivity UI interface
+	 * 2.need to be called each time when data generated
+	 * 
+	 * @param data
+	 */
 	public void update(DataObject data)
 	{	
 		TextView speed = (TextView)this.findViewById(R.id.speed);
@@ -143,6 +159,15 @@ public class MainActivity extends FragmentActivity {
 		mybutton.performClick();
 	}
 	
+	
+	/**
+	 * @author Zhuo Chen
+	 * 
+	 * 1.view analysis button handler to create a fragment activity VisualActivity.class
+	 * 2.send dataList to VisualActivity using intent
+	 * 
+	 * @param view
+	 */
 	public void viewClick(View view)
 	{
 		Intent intent = new Intent(this, VisualActivity.class);

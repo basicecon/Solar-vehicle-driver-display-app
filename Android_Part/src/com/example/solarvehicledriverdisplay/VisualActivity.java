@@ -23,6 +23,17 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+/*********************************
+ * 
+ * 
+ * @author Zhuo Chen
+ * 
+ * Usage:
+ * 1.This is a fragment activity which has 5 fragment to display the line chart
+ *   for speed, batteryCharge, power, motorCurrent and batteryCurrent
+ * 
+ ********************************/
+
 public class VisualActivity extends FragmentActivity
 {
 	/**
@@ -40,7 +51,10 @@ public class VisualActivity extends FragmentActivity
 	 */
 	
 	ViewPager mViewPager;
+	
+	// store a static VisualActivity when it is first created -- Edited by Zhuo Chen
 	public static VisualActivity mVisualActivity;
+	// list of data object passed from MainActivity -- Edited by Zhuo Chen
 	public static ArrayList<DataObject> dataList;
 
 	@SuppressWarnings("unchecked")
@@ -54,7 +68,7 @@ public class VisualActivity extends FragmentActivity
 		
 		super.onCreate(savedInstanceState);
 		
-		// Receive DataObject from MainActivity
+		// Receive DataObject from MainActivity -- Edited by Zhuo Chen
 		dataList = (ArrayList<DataObject>)getIntent().getSerializableExtra(MainActivity.EXTRA_MESSAGE);
 		
 		setContentView(R.layout.activity_visual);
@@ -100,12 +114,13 @@ public class VisualActivity extends FragmentActivity
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
+			// Show 5 total pages -- Edited by Zhuo Chen
 			return 5;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
+			// set title for each fragment -- Edited by Zhuo Chen
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
@@ -123,6 +138,14 @@ public class VisualActivity extends FragmentActivity
 		}
 	}
 	
+	/**
+	 * @author Zhuo Chen
+	 * 
+	 * 1.real visualize method called by each fragment in creating time
+	 * 2.it will switch for the arg inputed to decide which line graph to be shown
+	 * 
+	 * @param arg
+	 */
 	public View visualize(int arg)
 	{
 		double[] x = new double[dataList.size()];
@@ -213,6 +236,13 @@ public class VisualActivity extends FragmentActivity
 		return chart;
 	}
 	
+	/**
+	 * @author Zhuo Chen
+	 * 
+	 * 1.test for the line chart
+	 * 2.not useful for the project
+	 * 
+	 */
 	public View visualizeTest()
 	{
 		double[] x = new double[]{1,3,5,7,9,11};
@@ -241,8 +271,8 @@ public class VisualActivity extends FragmentActivity
 	}
 
 	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
+	 * A dummy fragment representing a section of the app, but that will
+	 * display the line graph for each variable in DataObject
 	 */
 	public static class DummySectionFragment extends Fragment {
 		/**
@@ -264,8 +294,11 @@ public class VisualActivity extends FragmentActivity
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));*/
 			
+			// get arg from SectionsPagerAdapter -- Edited by Zhuo Chen
 			int arg = getArguments().getInt(ARG_SECTION_NUMBER);
 			
+			// get the View instance representing the line graph of the variable
+			// determined by arg -- Edited by Zhuo Chen
 			return VisualActivity.mVisualActivity.visualize(arg);
 			
 			//return rootView;
