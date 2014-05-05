@@ -1,5 +1,6 @@
 package com.example.solarvehicledriverdisplay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Intent;
@@ -84,17 +85,23 @@ public class MainActivity extends FragmentActivity {
 				        	batteryCurrentTextView.setText(""+obj.batteryCurrent+" A");
 				        	
 				        	//invalidate
-				        	speedTextView.invalidate();
-				        	batteryChargeTextView.invalidate();
-				        	powerTextView.invalidate();
-				        	motorCurrentTextView.invalidate();
-				        	batteryCurrentTextView.invalidate();
-				        	
-				        	speedTextView.postInvalidate();
-				        	batteryChargeTextView.postInvalidate();
-				        	powerTextView.postInvalidate();
-				        	motorCurrentTextView.postInvalidate();
-				        	batteryCurrentTextView.postInvalidate();
+//				        	speedTextView.invalidate();
+//				        	batteryChargeTextView.invalidate();
+//				        	powerTextView.invalidate();
+//				        	motorCurrentTextView.invalidate();
+//				        	batteryCurrentTextView.invalidate();
+//				        	
+//				        	speedTextView.postInvalidate();
+//				        	batteryChargeTextView.postInvalidate();
+//				        	powerTextView.postInvalidate();
+//				        	motorCurrentTextView.postInvalidate();
+//				        	batteryCurrentTextView.postInvalidate();
+				        	try {
+								temp.send(temp);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 				        	
 				        	runOnUiThread(new Runnable() {
 				        		   @Override

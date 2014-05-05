@@ -1,11 +1,17 @@
 package com.example.solarvehicledriverdisplay;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -98,6 +104,7 @@ public class DataObject implements Serializable{
 	
 	/******************************************************************************
 	 * 
+	 * @throws IOException 
 	 * @send function
 	 * send a json object for server to store 
 	 * the Return is set to false and doesn't 
@@ -110,7 +117,7 @@ public class DataObject implements Serializable{
 	 *******************************************************************************/
 	
 	
-	public static int send(DataObject obj){
+	public static int send(DataObject obj) throws IOException{
 //		int speed;
 //		int batteryCharge;
 //		int arrayPower;
@@ -133,26 +140,41 @@ public class DataObject implements Serializable{
 		}
 		
 		//create httpclient
-		String url = "www.data.cs.purdue.edu:";
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppostreq = new HttpPost(url);
-		StringEntity se = null;
-		try{
-			se = new StringEntity(jsonobj.toString());
-			se.setContentType("application/json;charset=UTF-8");
-			se.setContentEncoding((Header) new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-		}catch(Exception e){
-			Log.println(1, "String Entity", "toString method error");
-		}
-		httppostreq.setEntity(se);
-		HttpResponse httpresponse = null;
-		try{
-			httpresponse = httpclient.execute(httppostreq);
-		}catch(Exception e){
-			Log.println(1, "Http Request", "can't send message");
-		}
-		
-		Log.d("HttpResponse", ""+httpresponse);
+		String url = "www.data.cs.purdue.edu:7539/SolarCar/car_info.cgi?action=post&arraypower="+obj.arrayPower+"&batterycurrent="+obj.batteryCurrent+"&speed="+obj.speed+"&motorcurrent="+obj.motorCurrent+"&batterycharge="+obj.batteryCharge;
+//		DefaultHttpClient httpclient = new DefaultHttpClient();
+//		HttpPost httppostreq = new HttpPost(url);
+//		StringEntity se = null;
+//		try{
+//			se = new StringEntity(jsonobj.toString());
+//			se.setContentType("application/json;charset=UTF-8");
+//			se.setContentEncoding((Header) new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
+//		}catch(Exception e){
+//			Log.println(1, "String Entity", "toString method error");
+//		}
+//		httppostreq.setEntity(se);
+//		HttpResponse httpresponse = null;
+//		try{
+//			httpresponse = httpclient.execute(httppostreq);
+//		}catch(Exception e){
+//			Log.println(1, "Http Request", "can't send message");
+//		}
+//		
+//		Log.d("HttpResponse", ""+httpresponse);
+//		
+		HttpClient httpclient = new DefaultHttpClient();
+	    HttpResponse response = httpclient.execute(new HttpGet(url));
+	    StatusLine statusLine = response.getStatusLine();
+	    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+	        ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        response.getEntity().writeTo(out);
+	        out.close();
+	        String responseString = out.toString();
+	        //..more logic
+	    } else{
+	        //Closes the connection.
+	        response.getEntity().getContent().close();
+	        throw new IOException(statusLine.getReasonPhrase());
+	    }
 		
 		return 0;
 		
