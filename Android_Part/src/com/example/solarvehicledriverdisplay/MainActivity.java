@@ -66,9 +66,16 @@ public class MainActivity extends FragmentActivity {
 				        	dataList.add(temp);
 				        	count++;
 				        	final TextView speedTextView = (TextView)findViewById(R.id.speed);
-				        	speedTextView.setText(""+obj.speed+" mph");
+				        	if (obj.speed < 10)
+				        	{
+				        		speedTextView.setText(""+obj.speed+"  mph");
+				        	}
+				        	else
+				        	{
+				        		speedTextView.setText(""+obj.speed+" mph");
+				        	}
 				        	TextView batteryChargeTextView = (TextView)findViewById(R.id.batteryCharge);
-				        	batteryChargeTextView.setText(""+obj.batteryCharge+" C");
+				        	batteryChargeTextView.setText(""+obj.batteryCharge+"%");
 				        	TextView powerTextView = (TextView)findViewById(R.id.power);
 				        	powerTextView.setText(""+obj.arrayPower+" W");
 				        	TextView motorCurrentTextView = (TextView)findViewById(R.id.motorCurrent);
@@ -92,7 +99,7 @@ public class MainActivity extends FragmentActivity {
 				        	runOnUiThread(new Runnable() {
 				        		   @Override
 				        		   public void run() {
-				        			   speedTextView.setText(""+obj.speed+" mph");
+				        			   speedTextView.setText(""+obj.speed+"  mph");
 				        		   }
 				        		});
 //				        	try{
@@ -143,8 +150,18 @@ public class MainActivity extends FragmentActivity {
 		TextView batteryCurrent = (TextView)this.findViewById(R.id.batteryCurrent);
 		TextView motorCurrent = (TextView)this.findViewById(R.id.motorCurrent);
 		
-		String speedStr = data.speed + " mph";
-		String batteryStr = data.batteryCharge + " C";
+		String speedStr;
+		
+		if (data.speed < 10)
+		{
+			speedStr = data.speed + "  mph";
+		}
+		else
+		{
+			speedStr = data.speed + " mph";
+		}
+		
+		String batteryStr = data.batteryCharge + "%";
 		String powerStr = data.arrayPower + " W";
 		String batteryCurrentStr = data.batteryCurrent + " A";
 		String motorCurrentStr = data.motorCurrent + " A";
@@ -172,6 +189,7 @@ public class MainActivity extends FragmentActivity {
 	{
 		Intent intent = new Intent(this, VisualActivity.class);
     	Bundle bundle = new Bundle();
+    	//ArrayList<DataObject> objlist = getDataFromDatabases();
     	bundle.putSerializable(EXTRA_MESSAGE, dataList);
     	intent.putExtras(bundle);
 		startActivity(intent);

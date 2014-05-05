@@ -151,6 +151,7 @@ public class VisualActivity extends FragmentActivity
 		double[] x = new double[dataList.size()];
 		XYSeries series = null;
 		XYSeriesRenderer r = null;
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 		
 		for (int i = 0; i < dataList.size(); i++)
 		{
@@ -170,6 +171,8 @@ public class VisualActivity extends FragmentActivity
 			r.setColor(Color.BLUE);
 			r.setPointStyle(PointStyle.POINT);
 			
+			renderer.setYTitle("Speed(mph)");
+			
 			break;
 		case 2:
 			series= new XYSeries("Battery Charge");
@@ -182,6 +185,8 @@ public class VisualActivity extends FragmentActivity
 			r = new XYSeriesRenderer();
 			r.setColor(Color.RED);
 			r.setPointStyle(PointStyle.POINT);
+			
+			renderer.setYTitle("Battery Charge()");
 			
 			break;
 		case 3:
@@ -196,6 +201,8 @@ public class VisualActivity extends FragmentActivity
 			r.setColor(Color.CYAN);
 			r.setPointStyle(PointStyle.POINT);
 			
+			renderer.setYTitle("Power");
+			
 			break;
 		case 4:
 			series= new XYSeries("Motor Current");
@@ -208,6 +215,8 @@ public class VisualActivity extends FragmentActivity
 			r = new XYSeriesRenderer();
 			r.setColor(Color.GREEN);
 			r.setPointStyle(PointStyle.POINT);
+			
+			renderer.setYTitle("Motor Current");
 			
 			break;
 		case 5:
@@ -222,13 +231,24 @@ public class VisualActivity extends FragmentActivity
 			r.setColor(Color.YELLOW);
 			r.setPointStyle(PointStyle.POINT);
 			
+			renderer.setYTitle("Battery Current");
+			
 			break;
 		}
+		
+		r.setLineWidth(5);
 		
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(series);
 		
-		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		renderer.setLabelsTextSize(25);
+		renderer.setXLabelsColor(Color.CYAN);
+		renderer.setYLabelsColor(0, Color.CYAN);
+		renderer.setShowGrid(true);
+		renderer.setApplyBackgroundColor(true);
+		renderer.setBackgroundColor(Color.BLACK);
+		renderer.setXTitle("Time");
+		renderer.setAxisTitleTextSize(25);
 		renderer.addSeriesRenderer(r);
 		
 		View chart = ChartFactory.getLineChartView(this, dataset, renderer);

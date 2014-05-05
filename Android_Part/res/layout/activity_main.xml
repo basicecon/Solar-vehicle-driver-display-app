@@ -70,8 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/speedLabel"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="100dp"
-        android:text="0"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:text="0 mph"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -81,7 +82,8 @@
         android:layout_alignBaseline="@+id/batteryChargeLabel"
         android:layout_alignBottom="@+id/batteryChargeLabel"
         android:layout_alignLeft="@+id/speed"
-        android:text="0"
+        android:gravity="center"
+        android:text="100%"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -91,7 +93,8 @@
         android:layout_alignBaseline="@+id/powerLabel"
         android:layout_alignBottom="@+id/powerLabel"
         android:layout_alignLeft="@+id/batteryCharge"
-        android:text="0"
+        android:gravity="center"
+        android:text="0 W"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -101,7 +104,8 @@
         android:layout_alignBaseline="@+id/motorCurrentLabel"
         android:layout_alignBottom="@+id/motorCurrentLabel"
         android:layout_alignLeft="@+id/power"
-        android:text="0"
+        android:gravity="center"
+        android:text="0 A"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -111,7 +115,8 @@
         android:layout_alignBaseline="@+id/batteryCurrentLabel"
         android:layout_alignBottom="@+id/batteryCurrentLabel"
         android:layout_alignLeft="@+id/motorCurrent"
-        android:text="0"
+        android:gravity="center"
+        android:text="0 A"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
