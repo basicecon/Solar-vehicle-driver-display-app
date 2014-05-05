@@ -96,12 +96,12 @@ public class MainActivity extends FragmentActivity {
 //				        	powerTextView.postInvalidate();
 //				        	motorCurrentTextView.postInvalidate();
 //				        	batteryCurrentTextView.postInvalidate();
-				        	try {
-								temp.send(temp);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+//				        	try {
+//								temp.send(temp);
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
 				        	
 				        	runOnUiThread(new Runnable() {
 				        		   @Override
