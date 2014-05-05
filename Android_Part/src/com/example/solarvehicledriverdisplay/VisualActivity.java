@@ -149,111 +149,112 @@ public class VisualActivity extends FragmentActivity
 	public View visualize(int arg)
 	{
 		double[] x = new double[dataList.size()];
-		XYSeries series = null;
-		XYSeriesRenderer r = null;
-		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		
-		for (int i = 0; i < dataList.size(); i++)
-		{
-			x[i] = i;
-		}
-		
-		switch (arg) {
-		case 1:
-			series= new XYSeries("Speed");
-			
-			for (int i = 0; i < x.length; i++)
-			{
-				series.add(x[i], dataList.get(i).speed);
-			}
-			
-			r = new XYSeriesRenderer();
-			r.setColor(Color.BLUE);
-			r.setPointStyle(PointStyle.POINT);
-			
-			renderer.setYTitle("Speed(mph)");
-			
-			break;
-		case 2:
-			series= new XYSeries("Battery Charge");
-			
-			for (int i = 0; i < x.length; i++)
-			{
-				series.add(x[i], dataList.get(i).batteryCurrent);
-			}
-			
-			r = new XYSeriesRenderer();
-			r.setColor(Color.RED);
-			r.setPointStyle(PointStyle.POINT);
-			
-			renderer.setYTitle("Battery Charge()");
-			
-			break;
-		case 3:
-			series= new XYSeries("Power");
-			
-			for (int i = 0; i < x.length; i++)
-			{
-				series.add(x[i], dataList.get(i).arrayPower);
-			}
-			
-			r = new XYSeriesRenderer();
-			r.setColor(Color.CYAN);
-			r.setPointStyle(PointStyle.POINT);
-			
-			renderer.setYTitle("Power");
-			
-			break;
-		case 4:
-			series= new XYSeries("Motor Current");
-			
-			for (int i = 0; i < x.length; i++)
-			{
-				series.add(x[i], dataList.get(i).motorCurrent);
-			}
-			
-			r = new XYSeriesRenderer();
-			r.setColor(Color.GREEN);
-			r.setPointStyle(PointStyle.POINT);
-			
-			renderer.setYTitle("Motor Current");
-			
-			break;
-		case 5:
-			series= new XYSeries("Battery Current");
-			
-			for (int i = 0; i < x.length; i++)
-			{
-				series.add(x[i], dataList.get(i).batteryCurrent);
-			}
-			
-			r = new XYSeriesRenderer();
-			r.setColor(Color.YELLOW);
-			r.setPointStyle(PointStyle.POINT);
-			
-			renderer.setYTitle("Battery Current");
-			
-			break;
-		}
-		
-		r.setLineWidth(5);
-		
-		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		dataset.addSeries(series);
-		
-		renderer.setLabelsTextSize(25);
-		renderer.setXLabelsColor(Color.CYAN);
-		renderer.setYLabelsColor(0, Color.CYAN);
-		renderer.setShowGrid(true);
-		renderer.setApplyBackgroundColor(true);
-		renderer.setBackgroundColor(Color.BLACK);
-		renderer.setXTitle("Time");
-		renderer.setAxisTitleTextSize(25);
-		renderer.addSeriesRenderer(r);
-		
-		View chart = ChartFactory.getLineChartView(this, dataset, renderer);
-		
-		return chart;
+		  XYSeries series = null;
+		  XYSeriesRenderer r = null;
+		  XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		  
+		  for (int i = 0; i < dataList.size(); i++)
+		  {
+		   x[i] = i;
+		  }
+		  
+		  switch (arg) {
+		  case 1:
+		   series= new XYSeries("Speed");
+		   
+		   for (int i = 0; i < x.length; i++)
+		   {
+		    series.add(x[i], dataList.get(i).speed);
+		   }
+		   
+		   r = new XYSeriesRenderer();
+		   r.setColor(Color.BLUE);
+		   r.setPointStyle(PointStyle.POINT);
+		   
+		   renderer.setYTitle("Speed(mph)");
+		   
+		   break;
+		  case 2:
+		   series= new XYSeries("Battery Charge");
+		   
+		   for (int i = 0; i < x.length; i++)
+		   {
+		    series.add(x[i], dataList.get(i).batteryCurrent);
+		   }
+		   
+		   r = new XYSeriesRenderer();
+		   r.setColor(Color.RED);
+		   r.setPointStyle(PointStyle.POINT);
+		   
+		   renderer.setYTitle("Battery Charge(%)");
+		   
+		   break;
+		  case 3:
+		   series= new XYSeries("Power");
+		   
+		   for (int i = 0; i < x.length; i++)
+		   {
+		    series.add(x[i], dataList.get(i).arrayPower);
+		   }
+		   
+		   r = new XYSeriesRenderer();
+		   r.setColor(Color.CYAN);
+		   r.setPointStyle(PointStyle.POINT);
+		   
+		   renderer.setYTitle("Power(W)");
+		   
+		   break;
+		  case 4:
+		   series= new XYSeries("Motor Current");
+		   
+		   for (int i = 0; i < x.length; i++)
+		   {
+		    series.add(x[i], dataList.get(i).motorCurrent);
+		   }
+		   
+		   r = new XYSeriesRenderer();
+		   r.setColor(Color.GREEN);
+		   r.setPointStyle(PointStyle.POINT);
+		   
+		   renderer.setYTitle("Motor Current(A)");
+		   
+		   break;
+		  case 5:
+		   series= new XYSeries("Battery Current");
+		   
+		   for (int i = 0; i < x.length; i++)
+		   {
+		    series.add(x[i], dataList.get(i).batteryCurrent);
+		   }
+		   
+		   r = new XYSeriesRenderer();
+		   r.setColor(Color.YELLOW);
+		   r.setPointStyle(PointStyle.POINT);
+		   
+		   renderer.setYTitle("Battery Current(A)");
+		   
+		   break;
+		  }
+		  
+		  r.setLineWidth(5);
+		  
+		  XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		  dataset.addSeries(series);
+		  
+		  renderer.setLabelsTextSize(25);
+		  renderer.setXLabelsColor(Color.CYAN);
+		  renderer.setYLabelsColor(0, Color.CYAN);
+		  renderer.setShowGrid(true);
+		  renderer.setApplyBackgroundColor(true);
+		  renderer.setBackgroundColor(Color.BLACK);
+		  renderer.setXTitle("Time");
+		  renderer.setAxisTitleTextSize(25);
+		  renderer.setLegendTextSize(25);
+		  renderer.addSeriesRenderer(r);
+		  
+		  View chart = ChartFactory.getLineChartView(this, dataset, renderer);
+		  
+		  return chart;
 	}
 	
 	/**
