@@ -18,16 +18,15 @@ def get_latest_data():
   c = conn.cursor()
 
   c.execute("SELECT count(*) FROM data")
-  row = c.fetchone()
-  count = row[0]
-  c.execute("SELECT speed, batterycharge, arraypower, motorcurrent, batterycurrent FROM data WHERE dataid = {0}".format(count))
-  row = c.fetchone()
-  data = [ {'speed':row[0], 'batterycharge':row[1], 'arraypower':row[2],
-            'motorcurrent':row[3], 'batterycurrent':row[4]} ]
-
+  c.execute("SELECT speed, batterycharge, arraypower, motorcurrent, batterycurrent FROM data")
+  rows = c.fetchall()
   print("Content-Type: application/json\n\n")
+  data = []
+  for row in rows:
+    data.append({'speed':row[0], 'batterycharge':row[1], 'arraypower':row[2],
+            'motorcurrent':row[3], 'batterycurrent':row[4]})
+
   data_string = json.dumps(data)
-  sys.stderr.write("entering new tweet.\n")
   print data_string
 
   conn.commit()
