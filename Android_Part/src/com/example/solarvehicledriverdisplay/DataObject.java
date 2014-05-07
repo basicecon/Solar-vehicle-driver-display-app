@@ -1,9 +1,13 @@
 package com.example.solarvehicledriverdisplay;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.net.Socket;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -123,7 +127,12 @@ public class DataObject implements Serializable{
 //		int arrayPower;
 //		int motorCurrent;
 //		int batteryCurrent;
-		
+		//String url = "www.data.cs.purdue.edu:7539/SolarCar/car_info.cgi?action=post&arraypower="+obj.arrayPower+"&batterycurrent="+obj.batteryCurrent+"&speed="+obj.speed+"&motorcurrent="+obj.motorCurrent+"&batterycharge="+obj.batteryCharge;
+		Log.d("i like debuggging", "crap");
+		String url = "http://data.cs.purdue.edu:7539/SolarCar/car_info.cgi?action=post&speed=1000";
+		Log.println(1, "url isssssss god dam it", url);
+		testing test = new testing(obj);
+		new Thread(test).start();
 		//create json object
 		JSONObject jsonobj;
 		jsonobj = new JSONObject();
@@ -140,7 +149,7 @@ public class DataObject implements Serializable{
 		}
 		
 		//create httpclient
-		String url = "www.data.cs.purdue.edu:7539/SolarCar/car_info.cgi?action=post&arraypower="+obj.arrayPower+"&batterycurrent="+obj.batteryCurrent+"&speed="+obj.speed+"&motorcurrent="+obj.motorCurrent+"&batterycharge="+obj.batteryCharge;
+		
 //		DefaultHttpClient httpclient = new DefaultHttpClient();
 //		HttpPost httppostreq = new HttpPost(url);
 //		StringEntity se = null;
@@ -161,68 +170,29 @@ public class DataObject implements Serializable{
 //		
 //		Log.d("HttpResponse", ""+httpresponse);
 //		
-		HttpClient httpclient = new DefaultHttpClient();
-	    HttpResponse response = httpclient.execute(new HttpGet(url));
-	    StatusLine statusLine = response.getStatusLine();
-	    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-	        ByteArrayOutputStream out = new ByteArrayOutputStream();
-	        response.getEntity().writeTo(out);
-	        out.close();
-	        String responseString = out.toString();
-	        //..more logic
-	    } else{
-	        //Closes the connection.
-	        response.getEntity().getContent().close();
-	        throw new IOException(statusLine.getReasonPhrase());
-	    }
-		
+//		HttpClient httpclient = new DefaultHttpClient();
+//		
+//	    HttpResponse response = httpclient.execute(new HttpGet(url));
+//	    StatusLine statusLine = response.getStatusLine();
+//	    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+//	        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//	        response.getEntity().writeTo(out);
+//	        out.close();
+//	        String responseString = out.toString();
+//	        Log.println(1, "http response", responseString);
+//	        //..more logic
+//	    } else{
+//	        //Closes the connection.
+//	        response.getEntity().getContent().close();
+//	        throw new IOException(statusLine.getReasonPhrase());
+//	    }
+//		
 		return 0;
 		
 	}
 	
 	public static  DataObject[] getResponse(){
-		JSONObject jsonobj;
-		jsonobj = new JSONObject();
 		
-		try{
-			jsonobj.put("Speed", null);
-			jsonobj.put("BatteryCharge", null);
-			jsonobj.put("ArrayPower", null);
-			jsonobj.put("MotorCurrent", null);
-			jsonobj.put("batteryCurrent", null);
-			jsonobj.put("Return", true);			// Return is set to true
-		}catch(Exception e){
-			Log.println(1, "Json Object", "Unable to set json object value\n");
-		}
-		
-		//create httpclient
-				String url = "www.data.cs.purdue.edu:";
-				DefaultHttpClient httpclient = new DefaultHttpClient();
-				HttpPost httppostreq = new HttpPost(url);
-				StringEntity se = null;
-				try{
-					se = new StringEntity(jsonobj.toString());
-					se.setContentType("application/json;charset=UTF-8");
-					se.setContentEncoding((Header) new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-				}catch(Exception e){
-					Log.println(1, "String Entity", "toString method error");
-				}
-				httppostreq.setEntity(se);
-				HttpResponse httpresponse = null;
-				try{
-					httpresponse = httpclient.execute(httppostreq);
-				}catch(Exception e){
-					Log.println(1, "Http Request", "can't send message");
-				}
-				
-				Log.d("HttpResponse", ""+httpresponse);
-				HttpEntity responseEntity = httpresponse.getEntity();
-				InputStream is = null;
-				try{
-					is = responseEntity.getContent();
-				}catch(Exception e){
-					Log.println(1, "Get content", "response entity");
-				}
 				
 				
 		return null;
@@ -231,4 +201,32 @@ public class DataObject implements Serializable{
 
 	
 
+}
+
+class testing implements Runnable{
+	DataObject tempObj;
+	public testing(DataObject ojjjjjjjj){
+		tempObj = ojjjjjjjj;
+	}
+	public void run(){
+		try{
+		Socket socket = new Socket("data.cs.purdue.edu", 7539);
+		//
+		
+		Log.d("i like debuggging", "Start this little app");
+		PrintWriter outPipe2 = new PrintWriter(socket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		Log.d("i like debuggging", "Start this crap");
+		String getString = "GET "+"/SolarCar/car_info.cgi?action=post&arraypower="+tempObj.arrayPower+"&batterycurrent="+tempObj.batteryCurrent+"&speed="+tempObj.speed+"&motorcurrent="+tempObj.motorCurrent+"&batterycharge="+tempObj.batteryCharge;
+		outPipe2.println(getString);
+		Log.d("i like debuggging", "Start");
+		Log.d("i like debuggging", in.readLine());
+		Log.d("i like debuggging", in.readLine());
+		Log.d("i like debuggging", in.readLine());
+		Log.d("get string is ", getString);
+		Log.d("test GDB", "Start");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

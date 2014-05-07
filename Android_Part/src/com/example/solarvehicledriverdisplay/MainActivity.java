@@ -1,8 +1,11 @@
 package com.example.solarvehicledriverdisplay;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -96,12 +99,12 @@ public class MainActivity extends FragmentActivity {
 //				        	powerTextView.postInvalidate();
 //				        	motorCurrentTextView.postInvalidate();
 //				        	batteryCurrentTextView.postInvalidate();
-//				        	try {
-//								temp.send(temp);
-//							} catch (IOException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
+				        	try {
+								DataObject.send(temp);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 				        	
 				        	runOnUiThread(new Runnable() {
 				        		   @Override
@@ -109,11 +112,11 @@ public class MainActivity extends FragmentActivity {
 				        			   speedTextView.setText(""+obj.speed+"  mph");
 				        		   }
 				        		});
-//				        	try{
-//				        		Thread.sleep(200);
-//				        	}catch(Exception e){
-//				        		Log.println(1, "Sleep", "Failed\n");
-//				        	}
+				        	try{
+				        		Thread.sleep(200);
+				        	}catch(Exception e){
+				        		Log.println(1, "Sleep", "Failed\n");
+				        	}
 				        	
 				        	new Handler().postDelayed(new Runnable() {
 
@@ -199,6 +202,33 @@ public class MainActivity extends FragmentActivity {
     	//ArrayList<DataObject> objlist = getDataFromDatabases();
     	bundle.putSerializable(EXTRA_MESSAGE, dataList);
     	intent.putExtras(bundle);
+    	getData dataCarrage = new getData(obj);
+		new Thread(dataCarrage).start();
 		startActivity(intent);
+	}
+}
+
+class getData implements Runnable{
+	DataObject tempObj;
+	public getData(DataObject ojjjjjjjj){
+		tempObj = ojjjjjjjj;
+	}
+	public void run(){
+		try{
+		Socket socket = new Socket("data.cs.purdue.edu", 7539);
+		Log.d("test GDB", "Start");
+		PrintWriter out2 = new PrintWriter(socket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		Log.d("i like debuggging", "Start");
+		String getString = "GET "+"/SolarCar/car_info.cgi?action=get_latest_data";
+		out2.println(getString);
+		Log.d("i like debuggging", "Start");
+		Log.d("i like debuggging", in.readLine());
+		Log.d("i like debuggging", in.readLine());
+		Log.d("get string is ", getString);
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }
